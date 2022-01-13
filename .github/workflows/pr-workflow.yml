@@ -27,6 +27,7 @@ jobs:
       run: |
         COMMENT=$(cat snyk-output.json)
         echo "$COMMENT"
+        echo "URL: $URL"
         curl \
           -X POST \
           $URL \
