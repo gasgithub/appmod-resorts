@@ -20,12 +20,14 @@ jobs:
       run: |
         ls
         cat snyk-output.json
+        jq -c . snyk-output.json > sync-compact.json
+        cat sync-compact.json
     - name: Add comment to PR
       env:
         URL: ${{ github.event.pull_request.comments_url }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        COMMENT=$(cat snyk-output.json)
+        COMMENT=$(cat sync-compact.json)
         echo "$COMMENT"
         echo "URL: $URL"
         curl \
