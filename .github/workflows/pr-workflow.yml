@@ -22,6 +22,9 @@ jobs:
         cat snyk-output.json
         jq -c . snyk-output.json > sync-compact.json
         cat sync-compact.json
+        CC=$(cat sync-compact.json)
+        echo ${CC//\"/\\\"}
+        echo ${CC//\"/\\\"} > sync-compact.json
     - name: Add comment to PR
       env:
         URL: ${{ github.event.pull_request.comments_url }}
