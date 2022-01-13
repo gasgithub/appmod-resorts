@@ -12,37 +12,22 @@ jobs:
     - uses: actions/checkout@v2
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/maven@master
-      continue-on-error: true
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
-        args: --severity-threshold=high --json-file-output=snyk-output.json --sarif-file-output=snyk.sarif
+        args: --json-file-output=snyk-output.json --sarif-file-output=snyk.sarif
     - name: Upload result to GitHub Code Scanning
       uses: github/codeql-action/upload-sarif@v1
       with:
         sarif_file: snyk.sarif        
     - name: List results
+      if: always()
       run: |
         cat snyk-output.json
-        cat snyk.sarif
+        # cat snyk.sarif
         # jq -c . snyk-output.json > sync-compact.json
         # cat sync-compact.json
         # CC=$(cat snyk-output.json)
         # echo ${CC//\"/\\\"}
         # echo ${CC//\"/\\\"} > sync-compact.json
-    - name: Add comment to PR
-      env:
-        URL: ${{ github.event.pull_request.comments_url }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        # COMMENT=$(cat sync-compact.json)
-        COMMENT="Uploaded result to GitHub Code Scanning."
-        echo "$COMMENT"
-        echo "URL: $URL"
-        curl \
-          -X POST \
-          $URL \
-          -H "Content-Type: application/json" \
-          -H "Authorization: token $GITHUB_TOKEN" \
-          --data '{"body": "'"$COMMENT"'"}'
          
