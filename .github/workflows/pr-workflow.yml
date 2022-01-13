@@ -33,4 +33,5 @@ jobs:
           $URL \
           -H "Content-Type: application/json" \
           -H "Authorization: token $GITHUB_TOKEN" \
-          --data-binary "@snyk-output.json"       
+          --data '{"body": "'"$COMMENT"'"}'
+         
