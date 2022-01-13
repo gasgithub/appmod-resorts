@@ -20,8 +20,8 @@ jobs:
       run: |
         ls
         cat snyk-output.json
-        jq -c . snyk-output.json > sync-compact.json
-        cat sync-compact.json
+        # jq -c . snyk-output.json > sync-compact.json
+        # cat sync-compact.json
         CC=$(cat snyk-output.json)
         echo ${CC//\"/\\\"}
         echo ${CC//\"/\\\"} > sync-compact.json
