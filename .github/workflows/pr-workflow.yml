@@ -15,15 +15,21 @@ jobs:
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
-        args: --severity-threshold=high
+        args: --severity-threshold=high --json-file-output=snyk-output.json
+    - name: List results
+      run: |
+        ls
+        cat snyk-output.json
     - name: Add comment to PR
       env:
         URL: ${{ github.event.issue.comments_url }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
+        COMMENT=$(cat snyk-output.json)
+        echo "$COMMENT"
         curl \
           -X POST \
           $URL \
           -H "Content-Type: application/json" \
           -H "Authorization: token $GITHUB_TOKEN" \
-          --data '{ "body": "Testing" }        
+          --data '{ "body": "$COMMENT" }'        
