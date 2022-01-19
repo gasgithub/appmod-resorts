@@ -52,6 +52,13 @@ jobs:
         run: |
           docker build -t  "$REGISTRY"/"$REGISTRY_NAMESPACE"/"$APP_NAME":${{ github.sha }} .
 
+      # Push the image to Image Registry
+      - name: Push the image to Registry
+        id: push-to-registry
+        run: |
+          docker login -u="$REGISTRY_USER" -p="$REGISTRY_PASSWORD" "$REGISTRY"
+          docker push $REGISTRY/$REGISTRY_NAMESPACE/$APP_NAME:${{ github.sha }}
+          
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
