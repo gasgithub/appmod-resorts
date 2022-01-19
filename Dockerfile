@@ -1,4 +1,4 @@
-FROM openliberty/open-liberty:20.0.0.9-full-java11-openj9-ubi
+FROM openliberty/open-liberty:21.0.0.12-full-java11-openj9-ubi
 USER root
 
 # currently empty OpejLiberty image with issues, just to trigger scanning
