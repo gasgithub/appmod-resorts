@@ -67,7 +67,7 @@ jobs:
           template: '@/contrib/sarif.tpl'
           output: 'trivy-results.sarif'
           exit-code: '1'
-          ignore-unfixed: 'ture'
+          ignore-unfixed: 'true'
           severity: 'HIGH,CRITICAL'
           
 
