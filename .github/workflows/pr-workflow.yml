@@ -51,7 +51,7 @@ jobs:
           $URL \
           -H "Content-Type: application/json" \
           -H "Authorization: token $GITHUB_TOKEN" \
-          --data '{ "body": "$COMMENT" }'           
+          --data '{"body": "'"$COMMENT"'"}'          
         
   dependency-scan:
     runs-on: ubuntu-latest
