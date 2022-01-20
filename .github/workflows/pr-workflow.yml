@@ -38,6 +38,20 @@ jobs:
       with:
         host: ${{ secrets.SONARQUBE_HOST }}
         login: ${{ secrets.SONARQUBE_TOKEN }}  
+    - name: Add comment to PR
+      env:
+        URL: ${{ github.event.pull_request.comments_url }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        COMMENT="Source analysis available at ${{ secrets.SONARQUBE_HOST }}/dashboard?id=appmod-resorts"
+        echo "$COMMENT"
+        echo "URL: $URL"
+        curl \
+          -X POST \
+          $URL \
+          -H "Content-Type: application/json" \
+          -H "Authorization: token $GITHUB_TOKEN" \
+          --data '{ "body": "$COMMENT" }'           
         
   dependency-scan:
     runs-on: ubuntu-latest
