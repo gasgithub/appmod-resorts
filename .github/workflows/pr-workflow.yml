@@ -43,7 +43,7 @@ jobs:
         URL: ${{ github.event.pull_request.comments_url }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        COMMENT="Source analysis available at ${{ secrets.SONARQUBE_HOST }}/dashboard?id=appmod-resorts"
+        COMMENT="Source analysis available [here](${{ secrets.SONARQUBE_HOST }}/dashboard?id=appmod-resorts")
         echo "$COMMENT"
         echo "URL: $URL"
         curl \
